@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_view_move_form" model="ir.ui.view">
+            <field name="name">sale_view_order_custom_form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='narration']" position="after" >
+                    <group>
+                        <div>
+                            <label for="tax_reductions" string="Tax reductions"/>
+                            <field name="tax_reductions" mode="tree" nolabel="1"  >
+                                <tree  editable="bottom">
+                                    <field name="tax_reduction_id" />
+                                    <field name="amount"   widget="monetary" />
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+
+    <!-- ****** STAMPA FATTURA ****** -->
+    <template id="account_report_invoice_document_sconti_detrazioni" inherit_id="account.report_invoice_document">
+        <xpath expr="//p[@name='comment']" position="before">
+            <t t-foreach="o.tax_reductions" t-as="tax_red">
+                <p >
+                    <span t-field="tax_red.tax_reduction_id.document_text" /> <span t-field="tax_red.amount"
+                    t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}" />
+
+                </p>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
+

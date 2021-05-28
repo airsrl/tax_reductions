@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sale_view_order_custom_forms" model="ir.ui.view">
+            <field name="name">sale_view_order_custom_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='note']" position="after" >
+                    <group>
+                        <div>
+                            <label for="tax_reductions" string="Tax reductions"/>
+                            <field name="tax_reductions" mode="tree" nolabel="1"  >
+                                <tree  editable="none">
+                                    <field name="tax_reduction_id" />
+                                    <field name="amount"   widget="monetary" />
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+    <!-- ****** STAMPA ORDINE/PREVENTIVO ****** -->
+    <template id="sale_report_saleorder_document_sconti_detrazioni" inherit_id="sale.report_saleorder_document">
+         <xpath expr="//div[@name='signature']" position="after">
+            <t t-foreach="doc.tax_reductions" t-as="tax_red">
+                <p >
+                    <span t-field="tax_red.tax_reduction_id.document_text" /> <span t-field="tax_red.amount"
+                    t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}" />
+
+                </p>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
+
