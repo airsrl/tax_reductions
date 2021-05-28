@@ -17,4 +17,4 @@ class tax_reduction_line(models.Model):
     amount = fields.Float('Amount', digits=(12, 4))
 
     order_id = fields.Many2one('sale.order', string='Order reference', ondelete='cascade', copy=False)
-    move_id = fields.Many2one('account.move', string='Invoice reference', ondelete='cascade', copy=False)
+    move_id = fields.Many2one('account.invoice', string='Invoice reference', ondelete='cascade', copy=False)
