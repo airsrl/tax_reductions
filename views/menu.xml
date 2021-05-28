@@ -13,7 +13,7 @@
 
         <!-- MENU ITEM-->
         <menuitem name="Tax reductions" id="tax_reductions_list" sequence="5"
-              parent="account.account_invoicing_menu" action="tax_reduction_list_action"/>
+              parent="sale.sale_menu_root" action="tax_reduction_list_action"/>
 
     </data>
 </odoo>
