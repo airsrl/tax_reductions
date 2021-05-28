@@ -4,8 +4,8 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class account_move_template(models.Model):
-    _inherit = "account.move"
+class account_invoice(models.Model):
+    _inherit = "account.invoice"
 
     tax_reductions = fields.One2many('tax_reductions.tax_reduction_line', 'move_id', string="Tax reductions",
                                       states={'posted': [('readonly', True)], 'cancel': [('readonly', True)]},
