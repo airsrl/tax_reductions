@@ -16,7 +16,7 @@
              'security/ir.model.access.csv'
              ],
     'website': 'https://www.air-srl.com',
-    'depends': ['stock', 'sale'],
+    'depends': ['sale','account'],
     'installable': True,
     'auto_install': False,
 	"images": ['static/description/icon.png'],
