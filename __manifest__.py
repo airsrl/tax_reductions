@@ -16,7 +16,7 @@
              'security/ir.model.access.csv'
              ],
     'website': 'https://www.air-srl.com',
-    'depends': ['sale','account'],
+    'depends': ['sale','account','l10n_it_fatturapa'],
     'installable': True,
     'auto_install': False,
 	"images": ['static/description/icon.png'],

@@ -1,5 +1,36 @@
 from odoo import api, fields, models, _
-
+from odoo.addons.l10n_it_fatturapa.bindings.fatturapa import (
+    FatturaElettronica,
+    FatturaElettronicaHeaderType,
+    DatiTrasmissioneType,
+    IdFiscaleType,
+    ContattiTrasmittenteType,
+    CedentePrestatoreType,
+    AnagraficaType,
+    IndirizzoType,
+    IscrizioneREAType,
+    CessionarioCommittenteType,
+    RappresentanteFiscaleType,
+    DatiAnagraficiCedenteType,
+    DatiAnagraficiCessionarioType,
+    DatiAnagraficiRappresentanteType,
+    TerzoIntermediarioSoggettoEmittenteType,
+    DatiAnagraficiTerzoIntermediarioType,
+    FatturaElettronicaBodyType,
+    DatiGeneraliType,
+    DettaglioLineeType,
+    DatiBeniServiziType,
+    DatiRiepilogoType,
+    DatiGeneraliDocumentoType,
+    DatiDocumentiCorrelatiType,
+    ContattiType,
+    DatiPagamentoType,
+    DettaglioPagamentoType,
+    AllegatiType,
+    ScontoMaggiorazioneType,
+    CodiceArticoloType,
+    AltriDatiGestionaliType
+)
 
 class tax_reduction(models.Model):
     _name = 'tax_reductions.tax_reduction'
@@ -18,3 +49,16 @@ class tax_reduction_line(models.Model):
 
     order_id = fields.Many2one('sale.order', string='Order reference', ondelete='cascade', copy=False)
     move_id = fields.Many2one('account.invoice', string='Invoice reference', ondelete='cascade', copy=False)
+
+class WizardExportFatturapa(models.TransientModel):
+    _inherit = "wizard.export.fatturapa"
+
+    def setDatiGeneraliDocumento(self, invoice, body):
+        res =super(WizardExportFatturapa, self).setDatiGeneraliDocumento(invoice,body)
+        if invoice.tax_reductions:
+            for reduction in invoice.tax_reductions:
+                body.DatiGenerali.DatiGeneraliDocumento.ScontoMaggiorazione.append(ScontoMaggiorazioneType(
+                        Tipo='SC',
+                        Importo=reduction.amount
+                    ))
+        return res
