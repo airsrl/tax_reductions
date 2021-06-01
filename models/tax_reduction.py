@@ -62,3 +62,26 @@ class WizardExportFatturapa(models.TransientModel):
                         Importo=reduction.amount
                     ))
         return res
+
+    def setRiferimentoTesto(self, line):
+        res = []
+        if line.tax_reduction_id:
+            if line.tax_reduction_id.document_text:
+                res.append(AltriDatiGestionaliType(
+                    RiferimentoTesto='esempio'
+                ))
+
+        return res
+    #todo da completare
+    # def setDettaglioLinea( self, line_no, line, body, price_precision, uom_precision ):
+    #     DettaglioLinea = super(WizardExportFatturapa, self).setDettaglioLinea(
+    #         line_no, line, body, price_precision, uom_precision)
+    #     if line.tax_reduction_id:
+    #         if line.tax_reduction_id.document_text:
+    #             dati_gestionali = AltriDatiGestionaliType()
+    #             dati_gestionali.RiferimentoTesto = str(line.tax_reduction_id.document_text)
+    #             DettaglioLinea.AltriDatiGestionali.append(
+    #                 dati_gestionali
+    #             )
+
+        # return DettaglioLinea
