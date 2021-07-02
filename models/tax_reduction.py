@@ -22,6 +22,7 @@ from odoo.addons.l10n_it_fatturapa.bindings.fatturapa import (
     DatiBeniServiziType,
     DatiRiepilogoType,
     DatiGeneraliDocumentoType,
+
     DatiDocumentiCorrelatiType,
     ContattiType,
     DatiPagamentoType,
