@@ -58,7 +58,7 @@ class WizardExportFatturapa(models.TransientModel):
     _inherit = "wizard.export.fatturapa"
 
     def setDatiGeneraliDocumento(self, invoice, body):
-        _logger.info("setDatiGeneraliDocumento")
+        
         res =super(WizardExportFatturapa, self).setDatiGeneraliDocumento(invoice,body)
         if invoice.tax_reductions:
             for reduction in invoice.tax_reductions:
@@ -68,32 +68,27 @@ class WizardExportFatturapa(models.TransientModel):
                     ))
         return res
 
-#     def setRiferimentoTesto(self, line):
-#         _logger.info("setRiferimentoTesto")
-#         res = []
-#         if line.tax_reduction_id:
-#             if line.tax_reduction_id.document_text:
-#                 res.append(AltriDatiGestionaliType(
-#                     RiferimentoTesto='esempio'
-#                 ))
+    def setRiferimentoTesto(self, line):
+        
+        res = []
+        if line.tax_reduction_id:
+            if line.tax_reduction_id.document_text:
+                res.append(AltriDatiGestionaliType(
+                    RiferimentoTesto='esempio'
+                ))
 
-#         return res
+        return res
     
     
     def setDettaglioLinea( self, line_no, line, body, price_precision, uom_precision ):
         
-        _logger.info(f'line.invoice_id.tax_reductions: {line.invoice_id.tax_reductions}')
+        # _logger.info(f'line.invoice_id.tax_reductions: {line.invoice_id.tax_reductions}')
         DettaglioLinea = super(WizardExportFatturapa, self).setDettaglioLinea(
             line_no, line, body, price_precision, uom_precision)
         if len(line.invoice_id.tax_reductions) == 0:
             return DettaglioLinea
         
         tr = line.invoice_id.tax_reductions[0]
-        _logger.info(f'tr: {tr}')
-        _logger.info(f'tr.tax_reduction_id.document_text: {tr.tax_reduction_id.document_text}')
-        
-        #if line.invoice_id.tax_reductions.tax_reduction_line.document_text:
-            #if line.tax_reduction_id.document_text:
         dati_gestionali = AltriDatiGestionaliType()
         dati_gestionali.TipoDato = '1'
         dati_gestionali.RiferimentoTesto = str(tr.tax_reduction_id.document_text)
