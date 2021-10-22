@@ -1,3 +1,3 @@
-#air - tax reductions V12
+Tax reductions - Odoo V12
 
-Add tax reductions to sale orders and invoices
+Add tax reductions (Ecobonus) to sale orders and invoices and print all to fatturapa
